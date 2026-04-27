@@ -5,69 +5,67 @@ class EyeQEngine {
     this.history = [];
   }
 
-  // Add new data point (numbers, patterns, etc.)
   addData(data) {
+    if (!Array.isArray(data)) {
+      throw new Error("Data must be an array of numbers.");
+    }
+
     this.history.push(data);
   }
 
-  // Analyze frequency of numbers
   getFrequency() {
-    const freq = {};
+    const frequency = {};
 
-    this.history.flat().forEach(num => {
-      freq[num] = (freq[num] || 0) + 1;
+    this.history.flat().forEach((number) => {
+      frequency[number] = (frequency[number] || 0) + 1;
     });
 
-    return freq;
+    return frequency;
   }
 
-  // Detect repeating patterns
   detectPatterns() {
     const patterns = {};
-    const sequences = this.history.map(arr => arr.join("-"));
 
-    sequences.forEach(seq => {
-      patterns[seq] = (patterns[seq] || 0) + 1;
+    this.history.forEach((entry) => {
+      const patternKey = entry.join("-");
+      patterns[patternKey] = (patterns[patternKey] || 0) + 1;
     });
 
     return patterns;
   }
 
-  // Generate prediction based on weighted frequency
   generatePrediction(count = 5) {
-    const freq = this.getFrequency();
+    const frequency = this.getFrequency();
 
-    const sorted = Object.entries(freq)
+    return Object.entries(frequency)
       .sort((a, b) => b[1] - a[1])
-      .map(entry => Number(entry[0]));
-
-    return sorted.slice(0, count);
+      .slice(0, count)
+      .map(([number]) => Number(number));
   }
 
-  // EyeQ Score (how strong pattern consistency is)
   calculateEyeQ() {
     const patterns = this.detectPatterns();
-    const values = Object.values(patterns);
+    const patternCounts = Object.values(patterns);
 
-    if (values.length === 0) return 0;
+    if (patternCounts.length === 0) {
+      return 0;
+    }
 
-    const max = Math.max(...values);
-    const total = values.reduce((a, b) => a + b, 0);
+    const strongestPattern = Math.max(...patternCounts);
+    const totalPatterns = patternCounts.reduce((sum, value) => sum + value, 0);
 
-    return ((max / total) * 100).toFixed(2);
+    return Number(((strongestPattern / totalPatterns) * 100).toFixed(2));
+  }
+
+  getReport() {
+    return {
+      frequency: this.getFrequency(),
+      patterns: this.detectPatterns(),
+      prediction: this.generatePrediction(),
+      eyeqScore: this.calculateEyeQ(),
+    };
   }
 }
 
-// Example usage
-const eyeq = new EyeQEngine();
-
-eyeq.addData([3, 12, 25, 33, 41]);
-eyeq.addData([7, 12, 25, 36, 44]);
-eyeq.addData([3, 12, 19, 33, 41]);
-
-console.log("Frequency:", eyeq.getFrequency());
-console.log("Patterns:", eyeq.detectPatterns());
-console.log("Prediction:", eyeq.generatePrediction());
-console.log("EyeQ Score:", eyeq.calculateEyeQ(), "%");
-
 export default EyeQEngine;
+
