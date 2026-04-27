@@ -71,16 +71,8 @@ export const TOKENOMICS = {
     }
   ]
 }
-total: 1_000_000_000,
-allocation: [
-{ label: ‘Community Rewards’, pct: 40, amount: 400_000_000, color: ‘#4fc3f7’, desc: ‘Earned by users via activity’ },
-{ label: ‘Creator Pool’,      pct: 20, amount: 200_000_000, color: ‘#7c4dff’, desc: ‘Paid to course creators’ },
-{ label: ‘Staking Reserves’,  pct: 15, amount: 150_000_000, color: ‘#00e5ff’, desc: ‘Funds the 12% APY staking yield’ },
-{ label: ‘Team and Advisors’, pct: 10, amount: 100_000_000, color: ‘#fbbf24’, desc: ‘3-year vesting, 6-month cliff’ },
-{ label: ‘Treasury’,          pct: 10, amount: 100_000_000, color: ‘#64ffda’, desc: ‘DAO-controlled development fund’ },
-{ label: ‘Liquidity’,         pct:  5, amount:  50_000_000, color: ‘#ec4899’, desc: ‘DEX liquidity provision’ },
-]
-}
+
+
 
 export const CONTRACT = {
 address: null,
