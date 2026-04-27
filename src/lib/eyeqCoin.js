@@ -39,7 +39,7 @@ export const TOKENOMICS = {
       pct: 20,
       amount: 200_000_000,
       color: "#7c4dff",
-      desc: "desc: "Paid to platform creators"
+      desc: "Paid to platform creators"
     },
     {
       label: "Staking Reserves",
