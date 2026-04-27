@@ -45,7 +45,7 @@ abi: []
 }
 
 export function getTier(balance) {
-return return [...TIERS].reverse()
+return [...TIERS].reverse()
 .find(t => balance >= t.min) || TIERS[0]
 }
 
